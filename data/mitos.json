@@ -1,0 +1,38 @@
+[
+  {
+    "mito": "\"Una copa de vino al día es buena para la salud.\"",
+    "realidad": "Eso era una conclusión de estudios patrocinados por la industria vinícola. La OMS confirmó en 2023 que no existe cantidad segura de alcohol para la salud.",
+    "categoria": "Alcohol",
+    "emoji": "wine"
+  },
+  {
+    "mito": "\"El cigarro de vez en cuando no hace daño.\"",
+    "realidad": "Un solo cigarrillo daña el revestimiento de los vasos sanguíneos. No existe un nivel de consumo de tabaco sin riesgo.",
+    "categoria": "Tabaco",
+    "emoji": "cigarette"
+  },
+  {
+    "mito": "\"La mariguana es natural, entonces es segura.\"",
+    "realidad": "El arsénico también es natural. En cerebros en desarrollo (hasta los 25 años), el THC puede afectar la memoria, el aprendizaje y aumentar el riesgo de psicosis.",
+    "categoria": "Cannabis",
+    "emoji": "leaf"
+  },
+  {
+    "mito": "\"Probar una vez no engancha.\"",
+    "realidad": "La adicción no depende de cuántas veces, sino de la predisposición genética, el contexto emocional y la sustancia. Para algunas personas, una vez sí puede ser suficiente para iniciar un patrón.",
+    "categoria": "Adicciones",
+    "emoji": "brain"
+  },
+  {
+    "mito": "\"Si todos lo hacen, no puede estar tan mal.\"",
+    "realidad": "La mayoría de jóvenes mexicanos no consumen drogas. La percepción de que 'todos lo hacen' es una distorsión que la presión social amplifica.",
+    "categoria": "Presión social",
+    "emoji": "users"
+  },
+  {
+    "mito": "\"Las drogas te ayudan a olvidar los problemas.\"",
+    "realidad": "Solo los posponen y los amplifican. Las sustancias no resuelven el dolor emocional — lo tapan temporalmente y crean nuevos problemas encima.",
+    "categoria": "Salud mental",
+    "emoji": "message-circle"
+  }
+]

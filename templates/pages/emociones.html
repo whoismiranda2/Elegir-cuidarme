@@ -1,0 +1,89 @@
+{% extends "partials/base.html" %}
+{% block title %}Emociones — Elegir Cuidarme{% endblock %}
+
+{% block content %}
+<!-- Flora con mensaje empático -->
+<div class="mascot-bubble" data-frases='{{ frases_mascota | tojson }}'>
+  <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Flora" class="mascot-img">
+  <div class="mascot-speech"><span id="mascotMsg">Cargando...</span></div>
+</div>
+
+<div class="page-header">
+  <h1><i data-lucide="heart-pulse"></i> ¿Cómo te sientes hoy?</h1>
+  <p>No juzgamos ninguna emoción. Todas son válidas y tienen sentido.</p>
+</div>
+
+<!-- Selector de emoción -->
+<div class="emocion-grid">
+  <button class="emocion-btn" onclick="seleccionarEmocion('bien', this)">
+    <span class="emocion-emoji"><i data-lucide="smile"></i></span>Bien
+  </button>
+  <button class="emocion-btn" onclick="seleccionarEmocion('normal', this)">
+    <span class="emocion-emoji"><i data-lucide="meh"></i></span>Normal
+  </button>
+  <button class="emocion-btn" onclick="seleccionarEmocion('triste', this)">
+    <span class="emocion-emoji"><i data-lucide="frown"></i></span>Triste
+  </button>
+  <button class="emocion-btn" onclick="seleccionarEmocion('enojado', this)">
+    <span class="emocion-emoji"><i data-lucide="angry"></i></span>Enojado/a
+  </button>
+  <button class="emocion-btn" onclick="seleccionarEmocion('ansioso', this)">
+    <span class="emocion-emoji"><i data-lucide="alert-circle"></i></span>Ansioso/a
+  </button>
+</div>
+
+<!-- Texto opcional -->
+<textarea
+  id="emocionTexto"
+  class="emocion-textarea"
+  placeholder="¿Qué pasó hoy? (opcional — nadie más lo verá)"
+  rows="3"
+></textarea>
+<p class="privacidad-nota"><i data-lucide="lock"></i> Este espacio es solo tuyo</p>
+
+<div style="margin-top: 1rem;">
+  <button class="btn-primary" onclick="guardarEmocion()">
+    Guardar cómo me siento
+  </button>
+</div>
+
+<!-- Banner de respuesta -->
+<div id="feedbackBanner" class="feedback-banner"></div>
+
+<!-- Separador -->
+<hr style="border: none; border-top: 2px solid var(--border); margin: 2.5rem 0;">
+
+<!-- Filtro de técnicas -->
+<div class="page-header" style="margin-bottom: 1rem;">
+  <h2 style="font-size:1.3rem; color: var(--text); font-weight:800;"><i data-lucide="wrench"></i> Técnicas de autocuidado</h2>
+  <p>Elige qué estás sintiendo para ver las técnicas que más te pueden ayudar.</p>
+</div>
+
+<div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+  <button class="filtro-emocion-btn btn-primary" style="font-size:0.8rem; padding:0.5rem 1rem;" data-emocion="todos" onclick="filtrarTecnicas('todos')">Todas</button>
+  <button class="filtro-emocion-btn" style="font-size:0.8rem; padding:0.5rem 1rem; border-radius:999px; border:2px solid var(--border); background:white; font-family:var(--font); font-weight:700; cursor:pointer;" data-emocion="ansioso" onclick="filtrarTecnicas('ansioso')"><i data-lucide="alert-circle"></i> Ansioso/a</button>
+  <button class="filtro-emocion-btn" style="font-size:0.8rem; padding:0.5rem 1rem; border-radius:999px; border:2px solid var(--border); background:white; font-family:var(--font); font-weight:700; cursor:pointer;" data-emocion="triste"  onclick="filtrarTecnicas('triste')"><i data-lucide="frown"></i> Triste</button>
+  <button class="filtro-emocion-btn" style="font-size:0.8rem; padding:0.5rem 1rem; border-radius:999px; border:2px solid var(--border); background:white; font-family:var(--font); font-weight:700; cursor:pointer;" data-emocion="enojado" onclick="filtrarTecnicas('enojado')"><i data-lucide="angry"></i> Enojado/a</button>
+  <button class="filtro-emocion-btn" style="font-size:0.8rem; padding:0.5rem 1rem; border-radius:999px; border:2px solid var(--border); background:white; font-family:var(--font); font-weight:700; cursor:pointer;" data-emocion="bien"    onclick="filtrarTecnicas('bien')"><i data-lucide="smile"></i> Bien</button>
+</div>
+
+<!-- Grid de técnicas -->
+<div class="tecnicas-grid">
+  {% for t in tecnicas %}
+  <div class="tecnica-card"
+       data-para="{{ t.para | join(',') }}"
+       style="border-left-color: {{ t.color }}">
+    <div class="tecnica-header">
+      <span class="tecnica-icon"><i data-lucide="{{ t.icono }}"></i></span>
+      <span class="tecnica-nombre">{{ t.nombre }}</span>
+    </div>
+    <p class="tecnica-desc">{{ t.descripcion }}</p>
+    <ol class="tecnica-pasos">
+      {% for paso in t.pasos %}
+      <li data-num="{{ loop.index }}">{{ paso }}</li>
+      {% endfor %}
+    </ol>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

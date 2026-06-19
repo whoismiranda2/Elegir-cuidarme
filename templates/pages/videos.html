@@ -1,0 +1,56 @@
+{% extends "partials/base.html" %}
+{% block title %}Videos — Elegir Cuidarme{% endblock %}
+
+{% block content %}
+<!-- Flora con mensaje curioso -->
+<div class="mascot-bubble" data-frases='{{ frases_mascota | tojson }}'>
+  <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Flora" class="mascot-img">
+  <div class="mascot-speech"><span id="mascotMsg">Cargando...</span></div>
+</div>
+
+<div class="page-header">
+  <h1><i data-lucide="clapperboard"></i> Videos para aprender</h1>
+  <p>Contenido real, claro y sin rollos. Para entender tu mente, tu cuerpo y tus decisiones.</p>
+</div>
+
+<!-- Filtros de categoría -->
+{% set categorias = videos | map(attribute='categoria') | unique | list %}
+<div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.75rem;">
+  <button class="filtro-btn btn-primary" style="font-size:0.8rem; padding:0.5rem 1rem;"
+          data-categoria="todos" onclick="filtrarVideos('todos')">
+    Todos
+  </button>
+  {% for cat in categorias %}
+  <button class="filtro-btn"
+          style="font-size:0.8rem; padding:0.5rem 1rem; border-radius:999px; border:2px solid var(--border); background:white; font-family:var(--font); font-weight:700; cursor:pointer;"
+          data-categoria="{{ cat }}" onclick="filtrarVideos('{{ cat }}')">
+    {{ cat }}
+  </button>
+  {% endfor %}
+</div>
+
+<!-- Grid de videos -->
+<div class="videos-grid">
+  {% for video in videos %}
+  <div class="video-card" data-categoria="{{ video.categoria }}">
+    <div class="video-thumb">
+      <!-- lazy loading: carga el iframe solo cuando el usuario scrollea -->
+      <iframe
+        loading="lazy"
+        src="https://www.youtube-nocookie.com/embed/{{ video.youtube_id }}"
+        title="{{ video.titulo }}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="video-info">
+      <span class="video-categoria">{{ video.categoria }}</span>
+      <div class="video-titulo">{{ video.titulo }}</div>
+      <div class="video-desc">{{ video.descripcion }}</div>
+      <div class="video-duracion"><i data-lucide="clock"></i> {{ video.duracion }}</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

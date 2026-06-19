@@ -1,0 +1,43 @@
+{% extends "partials/base.html" %}
+{% block title %}Actividades — Elegir Cuidarme{% endblock %}
+
+{% block content %}
+<!-- Flora con mensaje motivacional -->
+<div class="mascot-bubble" data-frases='{{ frases_mascota | tojson }}'>
+  <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Flora" class="mascot-img">
+  <div class="mascot-speech"><span id="mascotMsg">Cargando...</span></div>
+</div>
+
+<div class="page-header">
+  <h1><i data-lucide="star"></i> Actividades que te cuidan</h1>
+  <p>La mejor alternativa es una vida llena de cosas que valen la pena. Elige lo tuyo.</p>
+</div>
+
+{% for seccion in actividades %}
+<div class="actividades-section">
+  <div class="actividades-header">
+    <span class="emoji"><i data-lucide="{{ seccion.emoji }}"></i></span>
+    <h2>{{ seccion.categoria }}</h2>
+  </div>
+
+  <div class="actividades-list">
+    {% for op in seccion.opciones %}
+    <div class="actividad-item" style="border-top-color: {{ seccion.color }}">
+      <div class="actividad-nombre">{{ op.nombre }}</div>
+      <div class="actividad-desc">{{ op.descripcion }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endfor %}
+
+<!-- Invitación final -->
+<div style="background: var(--coral-lite); border-radius: var(--radius-lg); padding: 2rem; text-align: center; margin-top: 1rem;">
+  <p style="font-size: 1.1rem; font-weight: 800; color: var(--coral-dark); margin-bottom: 0.5rem;">
+    ¿Tienes una actividad favorita que no está aquí?
+  </p>
+  <p style="color: var(--text-muted); font-weight: 600; font-size: 0.9rem;">
+    Platica con tu orientador/a o maestro/a de confianza para agregarla al sitio.
+  </p>
+</div>
+{% endblock %}

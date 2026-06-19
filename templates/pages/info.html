@@ -1,0 +1,54 @@
+{% extends "partials/base.html" %}
+{% block title %}Info y Mitos — Elegir Cuidarme{% endblock %}
+
+{% block content %}
+<!-- Flora con mensaje informativo -->
+<div class="mascot-bubble" data-frases='{{ frases_mascota | tojson }}'>
+  <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Flora" class="mascot-img">
+  <div class="mascot-speech"><span id="mascotMsg">Cargando...</span></div>
+</div>
+
+<div class="page-header">
+  <h1><i data-lucide="lightbulb"></i> Mitos vs. Realidad</h1>
+  <p>Información real y sin miedo. Toca cada mito para descubrir qué hay detrás.</p>
+</div>
+
+<div class="mitos-list">
+  {% for mito in mitos %}
+  <div class="mito-card" onclick="toggleMito({{ loop.index0 }})">
+    <div class="mito-header">
+      <span class="mito-emoji"><i data-lucide="{{ mito.emoji }}"></i></span>
+      <div>
+        <div class="mito-label"><i data-lucide="x-circle"></i> Mito · {{ mito.categoria }}</div>
+        <div class="mito-texto">{{ mito.mito }}</div>
+      </div>
+    </div>
+    <div class="mito-realidad" id="realidad-{{ loop.index0 }}">
+      <div class="realidad-label"><i data-lucide="check-circle-2"></i> La realidad</div>
+      <div class="realidad-texto">{{ mito.realidad }}</div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Recursos de apoyo -->
+<div style="margin-top: 3rem; background: var(--verde-lite); border-radius: var(--radius-lg); padding: 2rem;">
+  <h2 style="font-size:1.1rem; font-weight:800; color:#1B5E3C; margin-bottom:1rem;">
+    🤝 ¿Necesitas hablar con alguien?
+  </h2>
+  <div style="display:flex; flex-direction:column; gap:0.75rem;">
+    <div style="font-size:0.9rem; font-weight:600;">
+      <strong>CAPA (Centro de Atención Primaria a las Adicciones)</strong><br>
+      <span style="color:var(--text-muted);">Gratuito · Confidencial · Tu orientador/a puede ayudarte a encontrar el más cercano.</span>
+    </div>
+    <div style="font-size:0.9rem; font-weight:600;">
+      <strong>SAPTEL</strong> — Línea de crisis: <strong>55 5259-8121</strong><br>
+      <span style="color:var(--text-muted);">24 horas, los 365 días del año.</span>
+    </div>
+    <div style="font-size:0.9rem; font-weight:600;">
+      <strong>Tu orientador/a o maestro/a de confianza</strong><br>
+      <span style="color:var(--text-muted);">A veces la mejor ayuda está más cerca de lo que crees.</span>
+    </div>
+  </div>
+</div>
+{% endblock %}

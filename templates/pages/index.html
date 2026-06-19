@@ -1,0 +1,86 @@
+{% extends "partials/base.html" %}
+{% block title %}Elegir Cuidarme — Inicio{% endblock %}
+
+{% block content %}
+
+<!-- Mascota Flora con mensaje de bienvenida -->
+<div class="mascot-bubble" data-frases='{{ frases_mascota | tojson }}'>
+  <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Flora" class="mascot-img">
+  <div class="mascot-speech"><span id="mascotMsg">Cargando...</span></div>
+</div>
+
+<!-- Pantalla de bienvenida -->
+<section class="welcome-section">
+  <h2 class="welcome-question">¿Qué necesitas hoy?</h2>
+
+  <div class="welcome-choices">
+    <a href="{{ url_for('emociones') }}" class="choice-btn coral">
+      <span class="choice-icon">💙</span>
+      <div>
+        <strong>Calmarme o procesar</strong>
+        <small>Técnicas rápidas para lo que sientes ahorita</small>
+      </div>
+    </a>
+
+    <a href="{{ url_for('actividades') }}" class="choice-btn verde">
+      <span class="choice-icon">⚡</span>
+      <div>
+        <strong>Hacer algo diferente</strong>
+        <small>Actividades que te cargan de energía</small>
+      </div>
+    </a>
+
+    <a href="{{ url_for('videos') }}" class="choice-btn azul">
+      <span class="choice-icon">🎬</span>
+      <div>
+        <strong>Aprender algo nuevo</strong>
+        <small>Videos cortos sobre tu mente y tus decisiones</small>
+      </div>
+    </a>
+
+    <a href="{{ url_for('info') }}" class="choice-btn lila">
+      <span class="choice-icon">💡</span>
+      <div>
+        <strong>Aclarar una duda</strong>
+        <small>La verdad detrás de lo que te cuentan</small>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Grid completo de módulos (navegación secundaria) -->
+<div class="modulos-label">o explora todo:</div>
+<div class="modulos-grid">
+  <a href="{{ url_for('emociones') }}" class="modulo-card coral">
+    <span class="modulo-icon"><i data-lucide="heart-pulse"></i></span>
+    <div>
+      <div class="modulo-title">Gestión Emocional</div>
+      <div class="modulo-desc">¿Cómo te sientes hoy? Técnicas rápidas para cuidar tu mente.</div>
+    </div>
+  </a>
+
+  <a href="{{ url_for('actividades') }}" class="modulo-card verde">
+    <span class="modulo-icon"><i data-lucide="star"></i></span>
+    <div>
+      <div class="modulo-title">Actividades</div>
+      <div class="modulo-desc">Cosas increíbles que hacer. Deporte, arte, conexión, naturaleza.</div>
+    </div>
+  </a>
+
+  <a href="{{ url_for('videos') }}" class="modulo-card azul">
+    <span class="modulo-icon"><i data-lucide="clapperboard"></i></span>
+    <div>
+      <div class="modulo-title">Videos</div>
+      <div class="modulo-desc">Aprende sobre emociones, salud y bienestar en minutos.</div>
+    </div>
+  </a>
+
+  <a href="{{ url_for('info') }}" class="modulo-card lila">
+    <span class="modulo-icon"><i data-lucide="lightbulb"></i></span>
+    <div>
+      <div class="modulo-title">Info y Mitos</div>
+      <div class="modulo-desc">Verdad vs. mito. Lo que nadie te explica bien sobre drogas y salud.</div>
+    </div>
+  </a>
+</div>
+{% endblock %}

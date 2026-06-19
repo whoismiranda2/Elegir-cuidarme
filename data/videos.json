@@ -1,0 +1,50 @@
+[
+  {
+    "id": "respiracion-intro",
+    "titulo": "Técnica de respiración para calmar la ansiedad",
+    "descripcion": "Aprende la respiración diafragmática en menos de 5 minutos.",
+    "youtube_id": "odADwWzHR24",
+    "categoria": "Gestión emocional",
+    "duracion": "5 min"
+  },
+  {
+    "id": "autoestima-joven",
+    "titulo": "¿Qué es la autoestima y cómo cuidarla?",
+    "descripcion": "Video animado sobre cómo construir una relación sana contigo mismo.",
+    "youtube_id": "WvI3tnank04",
+    "categoria": "Autoconocimiento",
+    "duracion": "14 min"
+  },
+  {
+    "id": "presion-social",
+    "titulo": "Cómo decir NO: presión social entre jóvenes",
+    "descripcion": "Estrategias reales para mantener tus decisiones cuando el grupo presiona.",
+    "youtube_id": "iqXvHMcL_yw",
+    "categoria": "Habilidades sociales",
+    "duracion": "4 min"
+  },
+  {
+    "id": "emociones-explicadas",
+    "titulo": "¿Por qué sentimos lo que sentimos?",
+    "descripcion": "La ciencia detrás de las emociones, explicada para jóvenes.",
+    "youtube_id": "PrTi3C8hql4",
+    "categoria": "Gestión emocional",
+    "duracion": "3 min"
+  },
+  {
+    "id": "sueno-salud",
+    "titulo": "Por qué dormir bien cambia todo",
+    "descripcion": "Cómo el sueño afecta tu humor, tus decisiones y tu salud.",
+    "youtube_id": "4vximN17so8",
+    "categoria": "Salud",
+    "duracion": "6 min"
+  },
+  {
+    "id": "adicciones-cerebro",
+    "titulo": "Qué le pasa al cerebro joven con las drogas",
+    "descripcion": "Explicación clara y sin moralizar sobre el impacto neurológico.",
+    "youtube_id": "VjTKEn9GifA",
+    "categoria": "Información",
+    "duracion": "10 min"
+  }
+]

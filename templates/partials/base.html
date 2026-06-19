@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Elegir Cuidarme{% endblock %}</title>
+
+  <!-- Aplica el tema guardado antes de pintar la página (evita parpadeo) -->
+  <script>
+    (function() {
+      var t = localStorage.getItem('ec_tema');
+      if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block extra_css %}{% endblock %}
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+</head>
+<body>
+
+  <!-- ── NAVBAR ────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <a href="{{ url_for('index') }}" class="nav-logo">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Mascota" class="logo-img">
+      <span class="logo-text">Elegir Cuidarme</span>
+    </a>
+
+    <div class="nav-actions">
+      <!-- Perfil con dropdown -->
+      <div class="nav-profile-wrap" id="navProfileWrap">
+        <button id="navProfile" class="nav-profile" onclick="toggleProfileMenu()" style="display:none">
+          <!-- rellenado por JS -->
+        </button>
+
+        <!-- Dropdown -->
+        <div class="profile-menu hidden" id="profileMenu">
+          <div class="profile-menu-label">Cambiar ícono</div>
+          <div id="dropdownAvatarGrid" class="avatar-grid avatar-grid-sm"></div>
+          <hr class="profile-menu-divider">
+          <button class="profile-menu-item danger" onclick="cerrarSesion()">
+            <i data-lucide="log-out"></i> Cerrar sesión
+          </button>
+        </div>
+      </div>
+
+      <button id="darkToggle" class="dark-toggle" onclick="toggleDarkMode()" aria-label="Modo oscuro">
+        <i data-lucide="moon"></i>
+      </button>
+      <button class="nav-toggle" aria-label="Menú" onclick="toggleMenu()">☰</button>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="{{ url_for('emociones') }}" class="nav-link {% if request.endpoint == 'emociones' %}active{% endif %}">
+        <i data-lucide="heart-pulse"></i> Emociones
+      </a></li>
+      <li><a href="{{ url_for('actividades') }}" class="nav-link {% if request.endpoint == 'actividades' %}active{% endif %}">
+        <i data-lucide="star"></i> Actividades
+      </a></li>
+      <li><a href="{{ url_for('videos') }}" class="nav-link {% if request.endpoint == 'videos' %}active{% endif %}">
+        <i data-lucide="clapperboard"></i> Videos
+      </a></li>
+      <li><a href="{{ url_for('info') }}" class="nav-link {% if request.endpoint == 'info' %}active{% endif %}">
+        <i data-lucide="lightbulb"></i> Info y Mitos
+      </a></li>
+    </ul>
+  </nav>
+
+  <!-- ── CONTENIDO PRINCIPAL ──────────────────────────────── -->
+  <main class="main-content">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ── FOOTER ───────────────────────────────────────────── -->
+  <footer class="footer">
+    <p>Hecho con 💚 para la <strong>Secundaria Técnica 9 Julián Carrillo</strong></p>
+    <p class="footer-sub">Comunidad libre de violencia y adicciones</p>
+  </footer>
+
+  <!-- ── MODAL: Auth (crear cuenta / iniciar sesión) ─────── -->
+  <div class="modal-overlay hidden" id="profileModal">
+    <div class="modal-box">
+      <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Flora"
+           style="width:68px;margin:0 auto 1rem;animation:float 3s ease-in-out infinite;">
+
+      <!-- Tabs (solo visibles cuando ya existe al menos un perfil) -->
+      <div class="modal-tabs" id="modalTabs" style="display:none">
+        <button class="modal-tab active" id="tabCrear" onclick="switchTab('crear')">Nueva cuenta</button>
+        <button class="modal-tab"        id="tabLogin" onclick="switchTab('login')">Ya tengo cuenta</button>
+      </div>
+
+      <!-- ── Panel: Crear cuenta ── -->
+      <div id="panelCrear">
+        <p class="modal-desc">Solo se guarda en este dispositivo — nadie más lo ve.</p>
+
+        <input type="text" id="createName" class="modal-input"
+               placeholder="Tu nombre o apodo" maxlength="20" autocomplete="off"
+               onkeydown="if(event.key==='Enter') document.getElementById('createPass').focus()">
+
+        <input type="password" id="createPass" class="modal-input"
+               placeholder="Contraseña (mín. 4 caracteres)"
+               onkeydown="if(event.key==='Enter') crearCuenta()">
+
+        <p class="modal-error hidden" id="createError"></p>
+
+        <div class="avatar-label">Elige tu ícono:</div>
+        <div id="avatarGridCrear" class="avatar-grid"></div>
+
+        <button class="btn-primary" onclick="crearCuenta()"
+                style="width:100%;justify-content:center;font-size:1rem;margin-top:0.5rem;">
+          ¡Crear cuenta! 🌸
+        </button>
+      </div>
+
+      <!-- ── Panel: Iniciar sesión ── -->
+      <div id="panelLogin" style="display:none">
+        <p class="modal-desc">¿Cuál es tu perfil?</p>
+
+        <div id="profileList" class="profile-list"></div>
+
+        <input type="password" id="loginPass" class="modal-input"
+               placeholder="Tu contraseña">
+
+        <p class="modal-error hidden" id="loginError"></p>
+
+        <button class="btn-primary" onclick="iniciarSesion()"
+                style="width:100%;justify-content:center;font-size:1rem;">
+          Entrar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+  <script>lucide.createIcons();</script>
+</body>
+</html>

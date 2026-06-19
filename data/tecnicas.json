@@ -1,0 +1,77 @@
+[
+  {
+    "id": "respiracion-478",
+    "nombre": "Respiración 4-7-8",
+    "descripcion": "Calma el sistema nervioso en menos de 2 minutos.",
+    "pasos": [
+      "Siéntate cómodamente y cierra los ojos.",
+      "Inhala por la nariz contando 4 segundos.",
+      "Sostén el aire contando 7 segundos.",
+      "Exhala lentamente por la boca contando 8 segundos.",
+      "Repite 3 o 4 veces."
+    ],
+    "icono": "wind",
+    "color": "#A8D8EA",
+    "para": ["ansioso", "enojado", "triste"]
+  },
+  {
+    "id": "5-cosas",
+    "nombre": "Las 5 cosas positivas",
+    "descripcion": "Redirige tu mente hacia lo que sí está bien hoy.",
+    "pasos": [
+      "Toma papel y pluma (o solo piénsalas).",
+      "Escribe o di en voz alta 5 cosas que agradeces hoy.",
+      "Pueden ser pequeñas: un sabor, una canción, una persona.",
+      "Léelas de nuevo lentamente.",
+      "Guárdalas para releerlas cuando las necesites."
+    ],
+    "icono": "sparkles",
+    "color": "#FFD6A5",
+    "para": ["triste", "normal"]
+  },
+  {
+    "id": "escaner-corporal",
+    "nombre": "Escáner corporal",
+    "descripcion": "Detecta dónde guardas la tensión y la sueltas.",
+    "pasos": [
+      "Recuéstate o siéntate con los pies en el suelo.",
+      "Cierra los ojos y respira profundo.",
+      "Lleva tu atención a los pies. ¿Sientes tensión?",
+      "Sube lentamente: piernas, abdomen, pecho, hombros, cuello, cara.",
+      "En cada zona, inhala y al exhalar suelta la tensión."
+    ],
+    "icono": "scan",
+    "color": "#B5EAD7",
+    "para": ["ansioso", "normal", "bien"]
+  },
+  {
+    "id": "carta-a-mi-mismo",
+    "nombre": "Carta a mí misme",
+    "descripcion": "Escríbete con la amabilidad que le darías a tu mejor amige.",
+    "pasos": [
+      "Toma papel o abre una nota en tu celular.",
+      "Empieza con: 'Querido/a [tu nombre],'",
+      "Cuéntate cómo te sientes sin juzgarte.",
+      "Escribe algo amable que necesitas escuchar hoy.",
+      "Termina con: 'Te quiero y estoy contigo.'"
+    ],
+    "icono": "mail",
+    "color": "#FFDDE1",
+    "para": ["triste", "enojado", "normal"]
+  },
+  {
+    "id": "movimiento",
+    "nombre": "3 minutos de movimiento",
+    "descripcion": "El cuerpo libera endorfinas rápido. Solo necesitas 3 minutos.",
+    "pasos": [
+      "Pon una canción que te guste.",
+      "Párate y sacude los brazos y piernas.",
+      "Baila, salta, estírate — lo que tu cuerpo pida.",
+      "No hay forma incorrecta de hacerlo.",
+      "Al terminar, respira hondo y nota cómo te sientes."
+    ],
+    "icono": "music-2",
+    "color": "#E2D4F0",
+    "para": ["triste", "enojado", "normal", "ansioso"]
+  }
+]

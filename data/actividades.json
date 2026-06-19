@@ -1,0 +1,46 @@
+[
+  {
+    "categoria": "Deporte y movimiento",
+    "color": "#A8D8EA",
+    "emoji": "dumbbell",
+    "opciones": [
+      { "nombre": "Fútbol o basquetbol con amigos", "descripcion": "El deporte en equipo libera tensión y crea vínculos." },
+      { "nombre": "Bailar", "descripcion": "Cualquier género, cualquier lugar. El cuerpo sabe cómo divertirse." },
+      { "nombre": "Salir a caminar o correr", "descripcion": "30 minutos al día cambia cómo te sientes por dentro." },
+      { "nombre": "Artes marciales o yoga", "descripcion": "Disciplina, respeto y autoconocimiento." }
+    ]
+  },
+  {
+    "categoria": "Arte y creatividad",
+    "color": "#FFDDE1",
+    "emoji": "palette",
+    "opciones": [
+      { "nombre": "Dibujar o pintar", "descripcion": "No necesitas ser buene. El proceso es lo que importa." },
+      { "nombre": "Hacer música o cantar", "descripcion": "La música es el idioma universal de las emociones." },
+      { "nombre": "Escribir: poesía, diario, cuentos", "descripcion": "Las palabras ordenan lo que sientes." },
+      { "nombre": "Fotografía o video", "descripcion": "Captura tu mundo desde tu propia mirada." }
+    ]
+  },
+  {
+    "categoria": "Conexión con otros",
+    "color": "#B5EAD7",
+    "emoji": "users",
+    "opciones": [
+      { "nombre": "Voluntariado en tu comunidad", "descripcion": "Ayudar a otros es de las experiencias más poderosas." },
+      { "nombre": "Clubes escolares o grupos", "descripcion": "Encuentra tu tribu dentro o fuera de la escuela." },
+      { "nombre": "Jugar juegos de mesa", "descripcion": "La competencia sana y la risa son medicina." },
+      { "nombre": "Cocinar o hornear con alguien", "descripcion": "Crear juntos es una forma de cuidarse mutuamente." }
+    ]
+  },
+  {
+    "categoria": "Naturaleza y calma",
+    "color": "#FFD6A5",
+    "emoji": "leaf",
+    "opciones": [
+      { "nombre": "Cuidar plantas", "descripcion": "Ver algo crecer gracias a ti es muy satisfactorio." },
+      { "nombre": "Salir a un parque sin celular", "descripcion": "La naturaleza recarga energía que las pantallas drenan." },
+      { "nombre": "Leer un libro que te guste", "descripcion": "No de tarea. Algo que tú elijas." },
+      { "nombre": "Meditación guiada", "descripcion": "5 minutos al día pueden cambiar mucho con constancia." }
+    ]
+  }
+]
