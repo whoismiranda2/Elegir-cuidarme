@@ -1,3 +1,10 @@
+// ── Google Analytics: helper de eventos ──────────────────────
+function registrarEvento(nombre, categoria) {
+  if (typeof gtag === 'function') {
+    gtag('event', nombre, { categoria: categoria });
+  }
+}
+
 // ── Menú responsive ──────────────────────────────────────────
 function toggleMenu() {
   document.getElementById('navLinks').classList.toggle('open');
@@ -224,6 +231,7 @@ function seleccionarEmocion(emocion, btn) {
 async function guardarEmocion() {
   const emocion = window.emocionSeleccionada;
   if (!emocion) { mostrarFeedback('Primero elige cómo te sientes hoy 😊', 'advertencia'); return; }
+  registrarEvento('emocion_guardada', emocion);
   const texto = document.getElementById('emocionTexto')?.value || '';
   try {
     const resp = await fetch('/api/emocion', {
@@ -253,6 +261,7 @@ function mostrarFeedback(mensaje, tipo) {
 
 // ── Toggle mito/realidad ──────────────────────────────────────
 function toggleMito(index) {
+  registrarEvento('mito_revelado', 'mito_' + index);
   document.getElementById('realidad-' + index)?.classList.toggle('visible');
 }
 

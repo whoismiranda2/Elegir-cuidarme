@@ -32,7 +32,8 @@
 <!-- Grid de videos -->
 <div class="videos-grid">
   {% for video in videos %}
-  <div class="video-card" data-categoria="{{ video.categoria }}">
+  <div class="video-card" data-categoria="{{ video.categoria }}"
+       onclick="registrarEvento('video_visto', '{{ video.titulo }}')">
     <div class="video-thumb">
       <!-- lazy loading: carga el iframe solo cuando el usuario scrollea -->
       <iframe

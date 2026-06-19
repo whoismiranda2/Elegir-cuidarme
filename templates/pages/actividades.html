@@ -22,7 +22,8 @@
 
   <div class="actividades-list">
     {% for op in seccion.opciones %}
-    <div class="actividad-item" style="border-top-color: {{ seccion.color }}">
+    <div class="actividad-item" style="border-top-color: {{ seccion.color }}"
+         onclick="registrarEvento('actividad_vista', '{{ op.nombre }}')">
       <div class="actividad-nombre">{{ op.nombre }}</div>
       <div class="actividad-desc">{{ op.descripcion }}</div>
     </div>
