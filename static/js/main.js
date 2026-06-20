@@ -367,3 +367,99 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Enter') crearCuenta();
   });
 });
+
+async function enviarMensajeFlora() {
+  const input = document.getElementById('floraChatInput');
+  const contenedor = document.getElementById('floraChatRespuesta');
+
+  if (!input || !contenedor) return;
+
+  const mensaje = input.value.trim();
+
+  if (!mensaje) {
+    contenedor.style.display = 'block';
+    contenedor.innerHTML = '<p class="tecnica-desc">Escribe un mensaje para que Flora pueda responder.</p>';
+    return;
+  }
+
+  contenedor.style.display = 'block';
+  contenedor.innerHTML = '<p class="tecnica-desc">Flora está leyendo tu mensaje...</p>';
+
+  try {
+    const resp = await fetch('/api/chat-flora', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mensaje })
+    });
+
+    const data = await resp.json();
+
+    if (!data.ok) {
+      contenedor.innerHTML = `<p class="tecnica-desc">${data.respuesta}</p>`;
+      return;
+    }
+
+    if (data.acciones && data.acciones.length > 0) {
+      data.acciones.forEach(accion => {
+        if (accion.startsWith('filtrar_tecnicas:')) {
+          const emocion = accion.split(':')[1];
+          filtrarTecnicas(emocion);
+        }
+      });
+    }
+
+    console.log('Respuesta Flora:', data);
+
+    const htmlFlora = construirRespuestaFloraHTML(data);
+    console.log('HTML Flora:', htmlFlora);
+
+    contenedor.innerHTML = htmlFlora;
+    contenedor.style.display = 'block';
+
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    };
+
+  } catch {
+    contenedor.innerHTML = '<p class="tecnica-desc">Hubo un problema al hablar con Flora. Intenta de nuevo.</p>';
+  }
+}
+
+function construirRespuestaFloraHTML(data) {
+  const tecnicas = Array.isArray(data.tecnicas) ? data.tecnicas.map(t =>
+    `<li><strong>${t.nombre}</strong>: ${t.descripcion}</li>`
+  ).join('') : '';
+
+  const actividades = Array.isArray(data.actividades) ? data.actividades.map(a =>
+    `<li><strong>${a.nombre}</strong> (${a.categoria}): ${a.descripcion}</li>`
+  ).join('') : '';
+
+  const videos = Array.isArray(data.videos) ? data.videos.map(v =>
+    `<li><strong>${v.titulo}</strong> · ${v.duracion}: ${v.descripcion}</li>`
+  ).join('') : '';
+
+  const icono = data.riesgo ? 'alert-triangle' : 'brain';
+  const titulo = data.riesgo ? 'Alerta de apoyo' : 'Respuesta de Flora';
+  const borde = data.riesgo ? 'border-left-color: var(--coral);' : 'border-left-color: var(--lila);';
+  const confianza = Math.round(((data.confianza || 0) * 100));
+
+  return `
+    <div class="flora-chat-response" style="margin-top:1rem; border-left:5px solid var(--lila); background:var(--bg); border-radius:var(--radius-md); padding:1rem; ${borde}">
+      <div class="tecnica-header">
+        <span class="tecnica-icon"><i data-lucide="${icono}"></i></span>
+        <span class="tecnica-nombre">${titulo}</span>
+      </div>
+
+      <p class="tecnica-desc">${data.respuesta || 'Flora no pudo generar una respuesta.'}</p>
+
+      <div style="font-size:0.9rem; font-weight:700; margin:1rem 0;">
+        <div><strong>Emoción detectada:</strong> ${data.emocion_detectada || 'normal'}</div>
+        <div><strong>Confianza:</strong> ${confianza}%</div>
+      </div>
+
+      ${tecnicas ? `<h4 style="margin-top:1rem;">Técnicas sugeridas</h4><ul style="padding-left:1.2rem;">${tecnicas}</ul>` : ''}
+      ${actividades ? `<h4 style="margin-top:1rem;">Actividades sugeridas</h4><ul style="padding-left:1.2rem;">${actividades}</ul>` : ''}
+      ${videos ? `<h4 style="margin-top:1rem;">Videos sugeridos</h4><ul style="padding-left:1.2rem;">${videos}</ul>` : ''}
+    </div>
+  `;
+}

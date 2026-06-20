@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import json
 from nlp_service import analizar_emocion_texto
+from chatbot_service import responder_flora
 import os
 
 app = Flask(__name__)
@@ -81,6 +82,15 @@ def analizar_texto():
     resultado = analizar_emocion_texto(texto)
 
     return jsonify(resultado)
+
+@app.route('/api/chat-flora', methods=['POST'])
+def chat_flora():
+    data = request.get_json()
+    mensaje = data.get('mensaje', '')
+
+    respuesta = responder_flora(mensaje)
+
+    return jsonify(respuesta)
 
 if __name__ == '__main__':
     import os

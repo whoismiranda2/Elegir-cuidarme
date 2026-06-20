@@ -50,6 +50,30 @@
 <!-- Banner de respuesta -->
 <div id="feedbackBanner" class="feedback-banner"></div>
 
+<div class="flora-chat-card" style="margin:1.5rem 0; border-left: 5px solid var(--lila); background: var(--bg-card); border-radius: var(--radius-md); padding: 1.5rem; box-shadow: var(--shadow-sm);">
+  <div class="tecnica-header">
+    <span class="tecnica-icon"><i data-lucide="bot"></i></span>
+    <span class="tecnica-nombre">Habla con Flora</span>
+  </div>
+
+  <p class="tecnica-desc">
+    Escribe cómo te sientes y Flora te sugerirá técnicas, actividades y videos del sitio.
+  </p>
+
+  <textarea
+    id="floraChatInput"
+    class="emocion-textarea"
+    placeholder="Ejemplo: me siento nervioso por mis exámenes"
+    rows="3"
+  ></textarea>
+
+  <button class="btn-primary" style="margin-top:1rem;" onclick="enviarMensajeFlora()">
+    Enviar a Flora
+  </button>
+
+  <div id="floraChatRespuesta" style="display:none; margin-top:1.25rem;"></div>
+</div>
+
 <div id="nlpResultCard" class="tecnica-card" style="display:none; margin: 1.5rem 0; border-left-color: var(--lila);">
   <div class="tecnica-header">
     <span class="tecnica-icon"><i data-lucide="brain"></i></span>
