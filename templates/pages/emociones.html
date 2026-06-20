@@ -50,6 +50,21 @@
 <!-- Banner de respuesta -->
 <div id="feedbackBanner" class="feedback-banner"></div>
 
+<div id="nlpResultCard" class="tecnica-card" style="display:none; margin: 1.5rem 0; border-left-color: var(--lila);">
+  <div class="tecnica-header">
+    <span class="tecnica-icon"><i data-lucide="brain"></i></span>
+    <span class="tecnica-nombre">Análisis inteligente del mensaje</span>
+  </div>
+
+  <p class="tecnica-desc" id="nlpResumen"></p>
+
+  <div style="font-size:0.9rem; font-weight:700; margin-top:0.5rem;">
+    <div><strong>Emoción detectada:</strong> <span id="nlpEmocion"></span></div>
+    <div><strong>Confianza:</strong> <span id="nlpConfianza"></span></div>
+    <div><strong>Recomendación:</strong> <span id="nlpRecomendacion"></span></div>
+  </div>
+</div>
+
 <!-- Separador -->
 <hr style="border: none; border-top: 2px solid var(--border); margin: 2.5rem 0;">
 

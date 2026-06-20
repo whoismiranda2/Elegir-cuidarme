@@ -230,21 +230,84 @@ function seleccionarEmocion(emocion, btn) {
 // ── Guardar emoción del día ───────────────────────────────────
 async function guardarEmocion() {
   const emocion = window.emocionSeleccionada;
-  if (!emocion) { mostrarFeedback('Primero elige cómo te sientes hoy 😊', 'advertencia'); return; }
-  registrarEvento('emocion_guardada', emocion);
   const texto = document.getElementById('emocionTexto')?.value || '';
+
+  if (!emocion) {
+    mostrarFeedback('Primero elige cómo te sientes hoy 😊', 'advertencia');
+    return;
+  }
+
+  registrarEvento('emocion_guardada', emocion);
+
   try {
-    const resp = await fetch('/api/emocion', {
+    const respEmocion = await fetch('/api/emocion', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ emocion, texto }),
     });
-    const data = await resp.json();
-    mostrarFeedback(data.mensaje, 'ok');
-    if (document.getElementById('emocionTexto')) document.getElementById('emocionTexto').value = '';
+
+    const dataEmocion = await respEmocion.json();
+
+    let mensajeFinal = dataEmocion.mensaje;
+
+    if (texto.trim().length > 0) {
+      const respNLP = await fetch('/api/analizar-texto', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ texto }),
+      });
+
+      const dataNLP = await respNLP.json();
+
+      if (dataNLP.ok) {
+        mostrarResultadoNLP(dataNLP, emocion);
+      }
+    }
+
+    mostrarFeedback(mensajeFinal, 'ok');
+
+    if (document.getElementById('emocionTexto')) {
+      document.getElementById('emocionTexto').value = '';
+    }
+
   } catch {
     mostrarFeedback('Hubo un problema. Intenta de nuevo.', 'error');
   }
+}
+
+function mostrarResultadoNLP(dataNLP, emocionSeleccionada) {
+  const card = document.getElementById('nlpResultCard');
+  const resumen = document.getElementById('nlpResumen');
+  const emocion = document.getElementById('nlpEmocion');
+  const confianza = document.getElementById('nlpConfianza');
+  const recomendacion = document.getElementById('nlpRecomendacion');
+
+  if (!card || !resumen || !emocion || !confianza || !recomendacion) return;
+
+  card.style.display = 'block';
+
+  emocion.textContent = dataNLP.emocion_detectada;
+  confianza.textContent = `${Math.round(dataNLP.confianza * 100)}%`;
+  recomendacion.textContent = dataNLP.recomendacion;
+
+  if (dataNLP.riesgo) {
+    resumen.textContent = 'El mensaje contiene señales que requieren apoyo de un adulto u orientador de confianza.';
+    card.style.borderLeftColor = 'var(--coral)';
+    mostrarFeedback('Detectamos señales de posible riesgo. Busca apoyo de un adulto u orientador de confianza.', 'advertencia');
+    return;
+  }
+
+  if (dataNLP.emocion_detectada !== emocionSeleccionada && dataNLP.emocion_detectada !== 'normal') {
+    resumen.textContent = `Tu selección fue "${emocionSeleccionada}", pero tu texto parece expresar "${dataNLP.emocion_detectada}". Te mostramos técnicas relacionadas.`;
+  } else {
+    resumen.textContent = `Tu texto coincide con la emoción seleccionada. Te mostramos técnicas recomendadas para "${dataNLP.emocion_detectada}".`;
+  }
+
+  if (dataNLP.emocion_detectada !== 'normal') {
+    filtrarTecnicas(dataNLP.emocion_detectada);
+  }
+
+  lucide.createIcons();
 }
 
 function mostrarFeedback(mensaje, tipo) {
@@ -256,7 +319,7 @@ function mostrarFeedback(mensaje, tipo) {
   banner.style.borderColor = tipo === 'advertencia' ? 'var(--amarillo)' : 'var(--verde)';
   banner.style.color       = tipo === 'advertencia' ? '#6B4500' : '#2D6A4F';
   clearTimeout(window.feedbackTimeout);
-  window.feedbackTimeout = setTimeout(() => banner.classList.remove('visible'), 5000);
+  window.feedbackTimeout = setTimeout(() => banner.classList.remove('visible'), 10000);
 }
 
 // ── Toggle mito/realidad ──────────────────────────────────────
