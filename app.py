@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import json
+from nlp_service import analizar_emocion_texto
 import os
 
 app = Flask(__name__)
@@ -72,6 +73,14 @@ def registrar_emocion():
     mensaje = respuestas.get(emocion, '¡Gracias por compartir cómo te sientes!')
     return jsonify({'ok': True, 'mensaje': mensaje})
 
+@app.route('/api/analizar-texto', methods=['POST'])
+def analizar_texto():
+    data = request.get_json()
+    texto = data.get('texto', '')
+
+    resultado = analizar_emocion_texto(texto)
+
+    return jsonify(resultado)
 
 if __name__ == '__main__':
     import os
