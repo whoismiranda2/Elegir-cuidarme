@@ -667,6 +667,41 @@ a { color: inherit; text-decoration: none; }
 .badge-lila   { background: var(--lila-lite);     color: #5B3A9D; }
 .badge-amarillo { background: var(--amarillo-lite); color: #6B4500; }
 
+/* ── Botones de filtro (videos y técnicas) ───────────────── */
+.filtro-btn,
+.filtro-emocion-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+  font-family: var(--font);
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all var(--transition);
+}
+
+.filtro-btn:hover,
+.filtro-emocion-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral-dark);
+  background: var(--coral-lite);
+}
+
+.filtro-btn.active,
+.filtro-emocion-btn.active {
+  background: var(--coral);
+  color: white;
+  border-color: var(--coral);
+}
+
+.filtro-btn svg,
+.filtro-emocion-btn svg { width: 0.9rem; height: 0.9rem; vertical-align: middle; }
+
 /* ── Botón primario ──────────────────────────────────────── */
 .btn-primary {
   display: inline-flex;

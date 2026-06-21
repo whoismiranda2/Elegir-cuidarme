@@ -67,7 +67,7 @@ def registrar_emocion():
     respuestas = {
         'bien':    '¡Qué bueno saberlo! Sigue eligiendo cuidarte 💚',
         'normal':  'Está bien sentirse así. Aquí hay técnicas que pueden ayudarte 🌿',
-        'triste':  'Gracias por contarlo. No estás sole — revisa las técnicas de hoy 💙',
+        'triste':  'Gracias por contarlo. No estás solo — revisa las técnicas de hoy 💙',
         'enojado': 'El enojo también es válido. Prueba la técnica de respiración 🌬️',
         'ansioso': 'Respira. Estás a salvo. La técnica 4-7-8 puede ayudarte ahora mismo 🤍',
     }

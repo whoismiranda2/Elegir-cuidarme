@@ -15,7 +15,7 @@
     "color": "#FFDDE1",
     "emoji": "palette",
     "opciones": [
-      { "nombre": "Dibujar o pintar", "descripcion": "No necesitas ser buene. El proceso es lo que importa." },
+      { "nombre": "Dibujar o pintar", "descripcion": "No necesitas ser bueno. El proceso es lo que importa." },
       { "nombre": "Hacer música o cantar", "descripcion": "La música es el idioma universal de las emociones." },
       { "nombre": "Escribir: poesía, diario, cuentos", "descripcion": "Las palabras ordenan lo que sientes." },
       { "nombre": "Fotografía o video", "descripcion": "Captura tu mundo desde tu propia mirada." }
