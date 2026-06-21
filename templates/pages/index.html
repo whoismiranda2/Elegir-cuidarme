@@ -9,47 +9,7 @@
   <div class="mascot-speech"><span id="mascotMsg">Cargando...</span></div>
 </div>
 
-<!-- Pantalla de bienvenida -->
-<section class="welcome-section">
-  <h2 class="welcome-question">¿Qué necesitas hoy?</h2>
-
-  <div class="welcome-choices">
-    <a href="{{ url_for('emociones') }}" class="choice-btn coral">
-      <span class="choice-icon">💙</span>
-      <div>
-        <strong>Calmarme o procesar</strong>
-        <small>Técnicas rápidas para lo que sientes ahorita</small>
-      </div>
-    </a>
-
-    <a href="{{ url_for('actividades') }}" class="choice-btn verde">
-      <span class="choice-icon">⚡</span>
-      <div>
-        <strong>Hacer algo diferente</strong>
-        <small>Actividades que te cargan de energía</small>
-      </div>
-    </a>
-
-    <a href="{{ url_for('videos') }}" class="choice-btn azul">
-      <span class="choice-icon">🎬</span>
-      <div>
-        <strong>Aprender algo nuevo</strong>
-        <small>Videos cortos sobre tu mente y tus decisiones</small>
-      </div>
-    </a>
-
-    <a href="{{ url_for('info') }}" class="choice-btn lila">
-      <span class="choice-icon">💡</span>
-      <div>
-        <strong>Aclarar una duda</strong>
-        <small>La verdad detrás de lo que te cuentan</small>
-      </div>
-    </a>
-  </div>
-</section>
-
-<!-- Grid completo de módulos (navegación secundaria) -->
-<div class="modulos-label">o explora todo:</div>
+<!-- Grid de módulos -->
 <div class="modulos-grid">
   <a href="{{ url_for('emociones') }}" class="modulo-card coral">
     <span class="modulo-icon"><i data-lucide="heart-pulse"></i></span>
