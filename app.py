@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
-from datetime import datetime
 import json
 import os
 from nlp_service import analizar_emocion_texto
@@ -20,18 +19,82 @@ def load_data(filename):
 def mascota(seccion):
     return load_data('mascota.json').get(seccion, [])
 
-def load_feedback():
-    path = os.path.join(os.path.dirname(__file__), 'data', 'feedback.json')
-    try:
-        with open(path, encoding='utf-8') as f:
-            return json.load(f)
-    except Exception:
-        return []
+def get_db_connection():
+    db_url = os.environ.get('DATABASE_URL', '')
+    if not db_url:
+        return None
+    if db_url.startswith('postgres://'):
+        db_url = db_url.replace('postgres://', 'postgresql://', 1)
+    import psycopg2
+    return psycopg2.connect(db_url)
 
-def save_feedback(items):
-    path = os.path.join(os.path.dirname(__file__), 'data', 'feedback.json')
-    with open(path, 'w', encoding='utf-8') as f:
-        json.dump(items, f, ensure_ascii=False, indent=2)
+def init_db():
+    conn = get_db_connection()
+    if conn is None:
+        print('[feedback] DATABASE_URL no configurada — se usará lista vacía.')
+        return
+    try:
+        with conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    CREATE TABLE IF NOT EXISTS feedback (
+                        id        SERIAL PRIMARY KEY,
+                        nombre    VARCHAR(50)  NOT NULL,
+                        estrellas INTEGER      NOT NULL,
+                        comentario VARCHAR(500) NOT NULL,
+                        fecha     TIMESTAMP    DEFAULT NOW()
+                    )
+                """)
+        print('[feedback] Tabla feedback lista.')
+    except Exception as e:
+        print(f'[feedback] Error al inicializar DB: {e}')
+    finally:
+        conn.close()
+
+def load_feedback():
+    conn = get_db_connection()
+    if conn is None:
+        return []
+    try:
+        with conn:
+            with conn.cursor() as cur:
+                cur.execute('SELECT nombre, estrellas, comentario, fecha FROM feedback ORDER BY fecha DESC')
+                rows = cur.fetchall()
+        return [
+            {
+                'nombre':     r[0],
+                'estrellas':  r[1],
+                'comentario': r[2],
+                'fecha':      r[3].strftime('%d/%m/%Y %H:%M') if r[3] else ''
+            }
+            for r in rows
+        ]
+    except Exception as e:
+        print(f'[feedback] Error al leer feedback: {e}')
+        return []
+    finally:
+        conn.close()
+
+def save_feedback(nombre, estrellas, comentario):
+    conn = get_db_connection()
+    if conn is None:
+        print('[feedback] Sin conexión a DB — feedback no guardado.')
+        return False
+    try:
+        with conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    'INSERT INTO feedback (nombre, estrellas, comentario) VALUES (%s, %s, %s)',
+                    (nombre, estrellas, comentario)
+                )
+        return True
+    except Exception as e:
+        print(f'[feedback] Error al guardar feedback: {e}')
+        return False
+    finally:
+        conn.close()
+
+init_db()
 
 
 # ── Rutas principales ────────────────────────────────────────────────────────
@@ -105,8 +168,8 @@ def chat_flora():
 @app.route('/api/feedback', methods=['POST'])
 def guardar_feedback():
     data = request.get_json()
-    nombre    = data.get('nombre', '').strip()[:50]
-    estrellas = data.get('estrellas', 0)
+    nombre     = data.get('nombre', '').strip()[:50]
+    estrellas  = data.get('estrellas', 0)
     comentario = data.get('comentario', '').strip()[:500]
 
     if not nombre or not comentario:
@@ -114,14 +177,9 @@ def guardar_feedback():
     if not isinstance(estrellas, int) or not (1 <= estrellas <= 5):
         return jsonify({'ok': False, 'error': 'Calificación inválida'})
 
-    items = load_feedback()
-    items.append({
-        'nombre':     nombre,
-        'estrellas':  estrellas,
-        'comentario': comentario,
-        'fecha':      datetime.now().strftime('%d/%m/%Y %H:%M')
-    })
-    save_feedback(items)
+    ok = save_feedback(nombre, estrellas, comentario)
+    if not ok:
+        return jsonify({'ok': False, 'error': 'No se pudo guardar. Inténtalo de nuevo.'})
     return jsonify({'ok': True})
 
 
