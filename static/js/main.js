@@ -463,3 +463,58 @@ function construirRespuestaFloraHTML(data) {
     </div>
   `;
 }
+
+// ── Evaluación / Feedback ─────────────────────────────────────
+let _estrellasSeleccionadas = 0;
+
+function seleccionarEstrella(n) {
+  _estrellasSeleccionadas = n;
+  const labels = ['Muy malo', 'Malo', 'Regular', 'Bueno', '¡Excelente!'];
+  document.getElementById('estrellaLabel').textContent = labels[n - 1];
+  document.querySelectorAll('.star-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i < n);
+  });
+}
+
+function enviarFeedback() {
+  const nombre    = (document.getElementById('evalNombre')?.value || '').trim();
+  const comentario = (document.getElementById('evalComentario')?.value || '').trim();
+  const errorEl   = document.getElementById('evalError');
+
+  const showError = msg => {
+    errorEl.textContent = msg;
+    errorEl.style.display = 'block';
+  };
+
+  errorEl.style.display = 'none';
+
+  if (!nombre)     return showError('Escribe tu nombre.');
+  if (!_estrellasSeleccionadas) return showError('Selecciona una calificación.');
+  if (!comentario) return showError('Escribe un comentario.');
+
+  fetch('/api/feedback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ nombre, estrellas: _estrellasSeleccionadas, comentario })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.ok) {
+      document.getElementById('evalFormWrap').style.display = 'none';
+      document.getElementById('evalExito').style.display = 'block';
+    } else {
+      showError(data.error || 'Ocurrió un error. Inténtalo de nuevo.');
+    }
+  })
+  .catch(() => showError('Error de red. Inténtalo de nuevo.'));
+}
+
+// Pre-fill nombre from session
+(function initEvalForm() {
+  const input = document.getElementById('evalNombre');
+  if (!input) return;
+  try {
+    const sesion = JSON.parse(localStorage.getItem('ec_sesion') || 'null');
+    if (sesion?.nombre) input.value = sesion.nombre;
+  } catch (_) {}
+})();

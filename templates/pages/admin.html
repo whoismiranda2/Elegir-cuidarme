@@ -1,0 +1,98 @@
+{% extends "partials/base.html" %}
+{% block title %}Panel Admin — Elegir Cuidarme{% endblock %}
+
+{% block content %}
+
+{% if not autenticado %}
+<!-- ── Login ── -->
+<div class="eval-container">
+  <div class="eval-card">
+    <h1 class="eval-title">Acceso administrativo</h1>
+    <p class="eval-subtitle">Solo para el equipo docente.</p>
+
+    <form method="POST" action="{{ url_for('admin') }}">
+      <div class="eval-field">
+        <label class="eval-label">Contraseña</label>
+        <input type="password" name="clave" class="modal-input"
+               placeholder="Contraseña de administrador" autofocus>
+      </div>
+      {% if error %}
+      <div class="modal-error" style="display:block;margin-bottom:0.75rem">
+        Contraseña incorrecta.
+      </div>
+      {% endif %}
+      <button type="submit" class="btn-primary">Entrar</button>
+    </form>
+  </div>
+</div>
+
+{% else %}
+<!-- ── Panel ── -->
+<div class="admin-panel">
+
+  <div class="admin-header">
+    <h1 class="admin-title">Panel de evaluaciones</h1>
+    <a href="{{ url_for('admin_salir') }}" class="admin-salir">Cerrar sesión</a>
+  </div>
+
+  <!-- Stats row -->
+  <div class="admin-stats">
+    <div class="admin-stat-card">
+      <div class="admin-stat-num">{{ total }}</div>
+      <div class="admin-stat-label">Evaluaciones</div>
+    </div>
+    <div class="admin-stat-card">
+      <div class="admin-stat-num">{{ promedio }}<span style="font-size:1.2rem">★</span></div>
+      <div class="admin-stat-label">Promedio</div>
+    </div>
+    <div class="admin-stat-card admin-dist">
+      {% for n in range(5, 0, -1) %}
+      <div class="dist-row">
+        <span class="dist-label">{{ n }}★</span>
+        <div class="dist-bar-wrap">
+          <div class="dist-bar"
+               style="width: {{ ((distribucion[n] / total * 100) | round(0) | int) if total > 0 else 0 }}%">
+          </div>
+        </div>
+        <span class="dist-count">{{ distribucion[n] }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Comments table -->
+  {% if feedbacks %}
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Calif.</th>
+          <th>Comentario</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for fb in feedbacks %}
+        <tr>
+          <td class="fb-nombre">{{ fb.nombre }}</td>
+          <td class="fb-stars">
+            {% for i in range(fb.estrellas) %}★{% endfor %}
+          </td>
+          <td class="fb-comentario">{{ fb.comentario }}</td>
+          <td class="fb-fecha">{{ fb.fecha }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="eval-card" style="text-align:center;padding:2.5rem">
+    <p style="color:var(--text-muted);font-size:1.1rem">Aún no hay evaluaciones guardadas.</p>
+  </div>
+  {% endif %}
+
+</div>
+{% endif %}
+
+{% endblock %}

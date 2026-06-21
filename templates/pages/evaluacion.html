@@ -1,0 +1,56 @@
+{% extends "partials/base.html" %}
+{% block title %}Evalúanos — Elegir Cuidarme{% endblock %}
+
+{% block content %}
+
+<div class="mascot-bubble" data-frases='{{ frases_mascota | tojson }}'>
+  <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Flora" class="mascot-img">
+  <div class="mascot-speech"><span id="mascotMsg">Cargando...</span></div>
+</div>
+
+<div class="eval-container">
+  <div class="eval-card">
+    <h1 class="eval-title">¿Qué te pareció?</h1>
+    <p class="eval-subtitle">Tu opinión nos ayuda a mejorar esta plataforma para todos.</p>
+
+    <!-- Stars -->
+    <div class="stars-input" id="starsInput">
+      <button class="star-btn" type="button" onclick="seleccionarEstrella(1)">★</button>
+      <button class="star-btn" type="button" onclick="seleccionarEstrella(2)">★</button>
+      <button class="star-btn" type="button" onclick="seleccionarEstrella(3)">★</button>
+      <button class="star-btn" type="button" onclick="seleccionarEstrella(4)">★</button>
+      <button class="star-btn" type="button" onclick="seleccionarEstrella(5)">★</button>
+    </div>
+    <p class="estrella-label" id="estrellaLabel">Toca una estrella para calificar</p>
+
+    <!-- Name -->
+    <div class="eval-field">
+      <label class="eval-label">Tu nombre</label>
+      <input type="text" id="evalNombre" class="modal-input" placeholder="Escribe tu nombre"
+             maxlength="50">
+    </div>
+
+    <!-- Comment -->
+    <div class="eval-field">
+      <label class="eval-label">Comentario</label>
+      <textarea id="evalComentario" class="eval-textarea"
+                placeholder="¿Qué te gustó? ¿Qué podemos mejorar?" maxlength="500" rows="4"></textarea>
+    </div>
+
+    <div class="modal-error" id="evalError" style="display:none"></div>
+
+    <!-- Submit -->
+    <div id="evalFormWrap">
+      <button class="btn-primary" onclick="enviarFeedback()">Enviar evaluación</button>
+    </div>
+
+    <!-- Success state -->
+    <div id="evalExito" class="eval-exito" style="display:none">
+      <div class="eval-exito-icon">✅</div>
+      <p class="eval-exito-msg">¡Gracias! Tu opinión fue guardada.</p>
+      <a href="{{ url_for('index') }}" class="btn-primary">Volver al inicio</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
