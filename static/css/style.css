@@ -225,6 +225,31 @@ a { color: inherit; text-decoration: none; }
   margin-top: 0.25rem;
   font-size: 0.8rem;
 }
+.footer-links {
+  margin-top: 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 1;
+}
+.footer-link {
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  background: rgba(255,255,255,0.2);
+  padding: 0.2rem 0.65rem;
+  border-radius: 99px;
+  transition: background 0.2s;
+  font-size: 0.82rem;
+}
+.footer-link:hover { background: rgba(255,255,255,0.38); }
+
+/* Admin link en navbar — más discreto */
+.nav-link-admin {
+  opacity: 0.55;
+  font-size: 0.82rem;
+}
 
 /* ── Welcome screen ──────────────────────────────────────── */
 .welcome-section {
@@ -340,15 +365,17 @@ a { color: inherit; text-decoration: none; }
   box-shadow: var(--shadow-md);
 }
 
-.modulo-card.coral  { border-color: var(--coral-lite);  }
-.modulo-card.azul   { border-color: var(--azul-lite);   }
-.modulo-card.verde  { border-color: var(--verde-lite);  }
-.modulo-card.lila   { border-color: var(--lila-lite);   }
+.modulo-card.coral    { border-color: var(--coral-lite);    }
+.modulo-card.azul     { border-color: var(--azul-lite);     }
+.modulo-card.verde    { border-color: var(--verde-lite);    }
+.modulo-card.lila     { border-color: var(--lila-lite);     }
+.modulo-card.amarillo { border-color: var(--amarillo-lite); }
 
-.modulo-card:hover.coral  { border-color: var(--coral);  background: var(--coral-lite); }
-.modulo-card:hover.azul   { border-color: var(--azul);   background: var(--azul-lite);  }
-.modulo-card:hover.verde  { border-color: var(--verde);  background: var(--verde-lite); }
-.modulo-card:hover.lila   { border-color: var(--lila);   background: var(--lila-lite);  }
+.modulo-card:hover.coral    { border-color: var(--coral);    background: var(--coral-lite);    }
+.modulo-card:hover.azul     { border-color: var(--azul);     background: var(--azul-lite);     }
+.modulo-card:hover.verde    { border-color: var(--verde);    background: var(--verde-lite);    }
+.modulo-card:hover.lila     { border-color: var(--lila);     background: var(--lila-lite);     }
+.modulo-card:hover.amarillo { border-color: var(--amarillo); background: var(--amarillo-lite); }
 
 .modulo-icon  { font-size: 2.5rem; }
 .modulo-title { font-size: 1.15rem; font-weight: 800; }

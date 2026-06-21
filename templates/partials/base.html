@@ -76,6 +76,12 @@
       <li><a href="{{ url_for('info') }}" class="nav-link {% if request.endpoint == 'info' %}active{% endif %}">
         <i data-lucide="lightbulb"></i> Info y Mitos
       </a></li>
+      <li><a href="{{ url_for('evaluacion') }}" class="nav-link {% if request.endpoint == 'evaluacion' %}active{% endif %}">
+        <i data-lucide="star"></i> Evalúanos
+      </a></li>
+      <li><a href="{{ url_for('admin') }}" class="nav-link nav-link-admin {% if request.endpoint == 'admin' %}active{% endif %}">
+        <i data-lucide="shield"></i> Admin
+      </a></li>
     </ul>
   </nav>
 
@@ -88,10 +94,10 @@
   <footer class="footer">
     <p>Hecho con 💚 para la <strong>Secundaria Técnica 9 Julián Carrillo</strong></p>
     <p class="footer-sub">Comunidad libre de violencia y adicciones</p>
-    <p class="footer-sub" style="margin-top:0.5rem">
-      <a href="{{ url_for('evaluacion') }}" style="color:var(--coral);font-weight:700;text-decoration:none">
-        ★ Evalúa esta plataforma
-      </a>
+    <p class="footer-sub footer-links">
+      <a href="{{ url_for('evaluacion') }}" class="footer-link">★ Evalúanos</a>
+      <span>·</span>
+      <a href="{{ url_for('admin') }}" class="footer-link">Panel admin</a>
     </p>
   </footer>
 
